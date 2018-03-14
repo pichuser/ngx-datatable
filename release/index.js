@@ -2884,7 +2884,7 @@ var DataTableBodyComponent = /** @class */ (function () {
             }
             last = Math.min((first + this.pageSize), this.rowCount);
         }
-        this.indexes = { first: first, last: last };
+        this.indexes = { first: Math.max(first - 25, 0), last: Math.min(last + 25, this.rowCount) };
     };
     /**
      * Refreshes the full Row Height cache.  Should be used

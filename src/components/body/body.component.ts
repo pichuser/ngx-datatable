@@ -548,7 +548,7 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       last = Math.min((first + this.pageSize), this.rowCount);
     }
 
-    this.indexes = { first, last };
+    this.indexes = { first: Math.max(first - 25, 0), last: Math.min(last + 25, this.rowCount) };
   }
 
   /**
