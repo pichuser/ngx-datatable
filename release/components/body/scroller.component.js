@@ -10,6 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var fromEvent_1 = require("rxjs/observable/fromEvent");
+var operators_1 = require("rxjs/operators");
+var Subject_1 = require("rxjs/Subject");
 var ScrollerComponent = /** @class */ (function () {
     function ScrollerComponent(ngZone, element, renderer) {
         this.ngZone = ngZone;
@@ -21,6 +24,7 @@ var ScrollerComponent = /** @class */ (function () {
         this.scrollXPos = 0;
         this.prevScrollYPos = 0;
         this.prevScrollXPos = 0;
+        this.ngUnsubscribe = new Subject_1.Subject();
         this.element = element.nativeElement;
     }
     ScrollerComponent.prototype.ngOnInit = function () {
@@ -30,13 +34,19 @@ var ScrollerComponent = /** @class */ (function () {
             var renderer = this.renderer;
             this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
             this.ngZone.runOutsideAngular(function () {
-                _this.parentElement.addEventListener('scroll', _this.onScrolled.bind(_this));
+                _this.scrollEvent = fromEvent_1.fromEvent(_this.parentElement, 'scroll').pipe(operators_1.takeUntil(_this.ngUnsubscribe), operators_1.debounceTime(100));
+                _this.scrollEvent.subscribe(function (e) {
+                    _this.onScrolled(e);
+                });
+                // this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
             });
         }
     };
     ScrollerComponent.prototype.ngOnDestroy = function () {
         if (this.scrollbarV || this.scrollbarH) {
-            this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
+            // this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
+            this.ngUnsubscribe.next();
+            this.ngUnsubscribe.complete();
         }
     };
     ScrollerComponent.prototype.setOffset = function (offsetY) {
@@ -46,7 +56,7 @@ var ScrollerComponent = /** @class */ (function () {
     };
     ScrollerComponent.prototype.onScrolled = function (event) {
         var _this = this;
-        var dom = event.currentTarget;
+        var dom = event.target;
         requestAnimationFrame(function () {
             _this.scrollYPos = dom.scrollTop;
             _this.scrollXPos = dom.scrollLeft;

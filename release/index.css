@@ -6,9 +6,7 @@
 .ngx-datatable {
   display: block;
   overflow: hidden;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
   position: relative;
   -webkit-transform: translate3d(0, 0, 0);
   /**
@@ -38,7 +36,6 @@
   .ngx-datatable [hidden] {
     display: none !important; }
   .ngx-datatable *, .ngx-datatable *:before, .ngx-datatable *:after {
-    -webkit-box-sizing: border-box;
     box-sizing: border-box; }
   .ngx-datatable.scroll-vertical .datatable-body {
     overflow-y: auto; }
@@ -68,14 +65,8 @@
   .ngx-datatable .datatable-body-row,
   .ngx-datatable .datatable-row-center,
   .ngx-datatable .datatable-header-inner {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-flow: row;
+    flex-direction: row;
     -o-flex-flow: row;
     flex-flow: row; }
   .ngx-datatable .datatable-body-cell,
@@ -99,9 +90,7 @@
     display: block;
     overflow: hidden; }
     .ngx-datatable .datatable-header .datatable-header-inner {
-      -webkit-box-align: stretch;
-          -ms-flex-align: stretch;
-              align-items: stretch;
+      align-items: stretch;
       -webkit-align-items: stretch; }
     .ngx-datatable .datatable-header .datatable-header-cell {
       position: relative;
@@ -141,46 +130,27 @@
     .ngx-datatable .datatable-body .datatable-row-detail {
       overflow-y: hidden; }
     .ngx-datatable .datatable-body .datatable-row-wrapper {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      -ms-flex-direction: column;
       flex-direction: column; }
     .ngx-datatable .datatable-body .datatable-body-row {
       outline: none; }
       .ngx-datatable .datatable-body .datatable-body-row > div {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex; }
   .ngx-datatable .datatable-footer {
     display: block;
     width: 100%; }
     .ngx-datatable .datatable-footer .datatable-footer-inner {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center;
+      align-items: center;
       width: 100%; }
     .ngx-datatable .datatable-footer .selected-count .page-count {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 1 40%;
-              flex: 1 1 40%; }
+      flex: 1 1 40%; }
     .ngx-datatable .datatable-footer .selected-count .datatable-pager {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 1 60%;
-              flex: 1 1 60%; }
+      flex: 1 1 60%; }
     .ngx-datatable .datatable-footer .page-count {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 1 20%;
-              flex: 1 1 20%; }
+      flex: 1 1 20%; }
     .ngx-datatable .datatable-footer .datatable-pager {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 1 80%;
-              flex: 1 1 80%;
+      flex: 1 1 80%;
       text-align: right; }
       .ngx-datatable .datatable-footer .datatable-pager .pager,
       .ngx-datatable .datatable-footer .datatable-pager .pager li {

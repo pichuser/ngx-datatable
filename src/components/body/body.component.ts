@@ -1,11 +1,20 @@
 import {
-  Component, Output, EventEmitter, Input, HostBinding, ChangeDetectorRef,
-  ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  HostBinding,
+  ChangeDetectorRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ElementRef
 } from '@angular/core';
 import { translateXY, columnsByPin, columnGroupWidths, RowHeightCache } from '../../utils';
-import { SelectionType } from '../../types';
-import { ScrollerComponent } from './scroller.component';
-import { MouseEvent } from '../../events';
+import { SelectionType }                                                from '../../types';
+import { ScrollerComponent }                                            from './scroller.component';
+import { MouseEvent }                                                   from '../../events';
 
 @Component({
   selector: 'datatable-body',
@@ -56,6 +65,7 @@ import { MouseEvent } from '../../events';
             [expanded]="getRowExpanded(group)"
             [rowClass]="rowClass"
             [displayCheck]="displayCheck"
+            
             (activate)="selector.onActivate($event, indexes.first + i)">
           </datatable-body-row>
           <ng-template #groupedRowsTemplate>
@@ -246,6 +256,12 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
       }
     }.bind(this);
 
+  }
+
+  ngAfterViewInit() {
+    this.scroller.scrollEvent.subscribe((event) => {
+      this.onBodyScroll(event);
+    });
   }
 
   /**

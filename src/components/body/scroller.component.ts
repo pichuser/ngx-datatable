@@ -4,6 +4,13 @@ import {
 } from '@angular/core';
 
 import { MouseEvent } from '../../events';
+import { fromEvent }  from "rxjs/observable/fromEvent";
+import {
+  debounceTime,
+  takeUntil
+}                     from "rxjs/operators";
+import { Subject }    from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'datatable-scroller',
@@ -35,6 +42,8 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   element: any;
   parentElement: any;
   onScrollListener: any;
+  public scrollEvent: Observable<any>;
+  ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private ngZone: NgZone, element: ElementRef, private renderer: Renderer2) {
 
@@ -47,14 +56,23 @@ export class ScrollerComponent implements OnInit, OnDestroy {
       const renderer = this.renderer;
       this.parentElement = renderer.parentNode(renderer.parentNode(this.element));
       this.ngZone.runOutsideAngular(() => {
-          this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
+        this.scrollEvent = fromEvent(this.parentElement, 'scroll').pipe(
+          takeUntil(this.ngUnsubscribe),
+          debounceTime(100)
+        );
+        this.scrollEvent.subscribe((e) => {
+            this.onScrolled(<any> e);
+          });
+          // this.parentElement.addEventListener('scroll', this.onScrolled.bind(this));
         });
     }
   }
 
   ngOnDestroy(): void {
     if (this.scrollbarV || this.scrollbarH) {
-      this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
+      // this.parentElement.removeEventListener('scroll', this.onScrolled.bind(this));
+      this.ngUnsubscribe.next();
+      this.ngUnsubscribe.complete();
     }
   }
 
@@ -65,7 +83,7 @@ export class ScrollerComponent implements OnInit, OnDestroy {
   }
 
   onScrolled(event: MouseEvent): void {
-    const dom: Element = <Element>event.currentTarget;
+    const dom: Element = <Element>event.target;
     requestAnimationFrame(() => {
       this.scrollYPos = dom.scrollTop;
       this.scrollXPos = dom.scrollLeft;

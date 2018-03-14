@@ -1,4 +1,6 @@
 import { ElementRef, EventEmitter, Renderer2, NgZone, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from "rxjs/Subject";
+import { Observable } from "rxjs/Observable";
 export declare class ScrollerComponent implements OnInit, OnDestroy {
     private ngZone;
     private renderer;
@@ -14,6 +16,8 @@ export declare class ScrollerComponent implements OnInit, OnDestroy {
     element: any;
     parentElement: any;
     onScrollListener: any;
+    scrollEvent: Observable<any>;
+    ngUnsubscribe: Subject<any>;
     constructor(ngZone: NgZone, element: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
     ngOnDestroy(): void;
