@@ -258,12 +258,6 @@ export class DataTableBodyComponent implements OnInit, OnDestroy {
 
   }
 
-  ngAfterViewInit() {
-    this.scroller.scrollEvent.subscribe((event) => {
-      this.onBodyScroll(event);
-    });
-  }
-
   /**
    * Called after the constructor, initializing input properties
    */
