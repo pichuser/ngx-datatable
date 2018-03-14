@@ -164,12 +164,6 @@ var DataTableBodyComponent = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    DataTableBodyComponent.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        this.scroller.scrollEvent.subscribe(function (event) {
-            _this.onBodyScroll(event);
-        });
-    };
     /**
      * Called after the constructor, initializing input properties
      */

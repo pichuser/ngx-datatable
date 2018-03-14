@@ -72,7 +72,6 @@ export declare class DataTableBodyComponent implements OnInit, OnDestroy {
      * Creates an instance of DataTableBodyComponent.
      */
     constructor(cd: ChangeDetectorRef);
-    ngAfterViewInit(): void;
     /**
      * Called after the constructor, initializing input properties
      */
